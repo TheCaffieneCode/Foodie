@@ -29,7 +29,7 @@ const ContactPage=()=>{
         <div class="container">
           <div class="relative flex flex-col min-w-0 break-words w-full">
             <div class="flex-auto p-5 lg:p-10">
-              <img src="https://user-images.githubusercontent.com/54521023/152731049-cc744a56-1d6f-4945-9566-0fa3b7ad1d24.png" alt="contact image" />
+              <img src="https://user-images.githubusercontent.com/54521023/152731049-cc744a56-1d6f-4945-9566-0fa3b7ad1d24.png" alt="contact" />
             </div>
           </div>
         </div>

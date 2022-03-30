@@ -1,9 +1,8 @@
-import React , {useState, useEffect} from "react";
+import React  from "react";
 import '../css/bgImg.css';
 import Navbar from "../temp/navbar";
 import fb from "../../firebase";
-const DB =fb.firestore();
-const users_list = DB.collection('users');
+
 
 
 const Signinpage=()=>{

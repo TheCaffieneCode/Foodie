@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+
 import Navbar from "./navbar";
 import fb from "../../firebase";
 const DB =fb.firestore();
@@ -8,7 +8,7 @@ const cart_list = DB.collection('Cart');
 
 const FoodsByRestro=()=>{
   const[Foods, SetFoods] = useState([]);
-  const[CartFood, SetCartFood] = useState([]);
+  
   const[n, setn] = useState("");
   const[m, setm] = useState("");
   const[r, setr] = useState("");
@@ -29,7 +29,6 @@ const FoodsByRestro=()=>{
  const AddToCart=(id)=>{
   foods_list.doc(id).get().then((snapshot) => {
       const data = snapshot.data();
-      SetCartFood(data);
       setn(data.Name);
       setm(data.MealType);
       setr(data.Restro);

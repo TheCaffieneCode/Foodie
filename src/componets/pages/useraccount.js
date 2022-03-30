@@ -1,8 +1,7 @@
-import react,{useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import fb from '../../firebase';
 
 import Navbar from '../temp/navbar';
-const DB =fb.firestore();
 const UserAc=()=>{
     const signout =()=>{
         fb.auth().signOut();
