@@ -1,0 +1,13 @@
+.BgImg {
+  background-image: url("../img/bg.jpg");
+}
+.SigninBgImg {
+  background-image: url("../img/bg2.jpg");
+}
+.logo {
+  display: inline;
+  color: #eb2929;
+  background-color: white;
+  border-radius: 50%;
+  font-weight: 600;
+}
