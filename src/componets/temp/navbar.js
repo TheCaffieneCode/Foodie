@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import fb from "../../firebase";
+import SearchBox from "./searchBox";
 
 const Navbar=()=>{
     const[user, setuser] = useState(()=>
@@ -22,6 +23,9 @@ const Navbar=()=>{
     <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       <span class="logo p-2 text-xl">foodie</span>
     </a>
+    <div className="items-center md:ml-auto">
+        <SearchBox/>
+    </div>
     <nav class="text-white font-bold md:ml-auto flex flex-wrap items-center text-lg justify-center">
        <Link to={"/"} className="mr-5 hover:text-gray-900">Home</Link>
       <Link to={"/Contact/"} className="mr-5 hover:text-gray-900">Contact</Link>
@@ -40,7 +44,6 @@ const Navbar=()=>{
         </>
     }
     </nav>
-    
   </div>
 </header>
     );

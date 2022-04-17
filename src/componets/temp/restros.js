@@ -1,28 +1,31 @@
 import React , {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "./navbar";
 import fb from '../../firebase';
 const DB =fb.firestore();
 const restro_list = DB.collection('restros');
 
 const Restrolist = () => {
+   const query = useParams();
    const[filtered, Setfiltered] = useState(false);
    const[restros, Setrestros] = useState([]);
    const[Frestros, SetFrestros] = useState([]);
    useEffect(()=>{
-      const unsubrestro = restro_list.onSnapshot((snapshot) => {
-         const data = snapshot.docs.map(doc => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          Setrestros(data);
-          
-     });
-     return unsubrestro;
-   },[]);
+      if (query) {
+         console.log(query.Meal);
+         const unsubrestro = restro_list.where("MealType", "==", query.Meal).onSnapshot((snapshot) => {
+            const data = snapshot.docs.map(doc => ({
+               ...doc.data(),
+               id: doc.id,
+             }));
+             Setrestros(data);
+        });
+        return unsubrestro;
+      }
+   },[query]);
    const FilterRestro = (str)=> {
       SetFrestros(restros.filter((item)=>
-            item.MealType.toLowerCase().includes(str.toLowerCase())
+            item.Type.toLowerCase().includes(str.toLowerCase())
         ));
       Setfiltered(true);
   };
@@ -35,12 +38,12 @@ const Restrolist = () => {
 <Navbar/>
 <div className="space-x-2 text-center">
    <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {UnFilterRestro()}} >All</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Drinks")}} >Drink</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Dinner")}} >Dinner</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Snacks")}} >Snacks</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Breakfast")}} >Breakfast</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Lunch")}} >Lunch</button>
-   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Night Life")}} >Night Life</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("southIndian food")}} >southIndian food</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Soft Drinks")}} >Soft Drinks</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Juice")}} >Juice</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Indian Foods")}} >Indian Foods</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("NorthIndian Food")}} >NorthIndian Food</button>
+   <button className="bg-green-500 p-2 text-white w-28" onClick={()=> {FilterRestro("Ice N Spices")}} >Ice N Spices</button>
 </div>
 
         <div className="space-y-4">
@@ -73,7 +76,7 @@ const Restrolist = () => {
             <p id="job" class="text-gray-500">{restro.Address}</p>
             <p id="job" class="text-gray-800">CITY: {restro.City}</p>
             <p id="job" class="text-gray-800 mt-2">CUISINES: {restro.Type}</p>
-            <button className="bg-red-500 p-2 text-white"><Link to={'/FoodsList/'}>Find Food</Link></button>
+            <button className="bg-red-500 p-2 text-white"><Link to={'/FoodsList/'+restro.Name}>Find Food</Link></button>
             
          </div>
       </div>

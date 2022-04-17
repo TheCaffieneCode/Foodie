@@ -7,6 +7,7 @@ import Signinpage from "./componets/pages/signInpage";
 import UserAc from "./componets/pages/useraccount";
 import Restrolist from "./componets/temp/restros";
 import FoodsByRestro from "./componets/temp/foods_in_restro";
+import SearchResult from "./componets/pages/searchResult";
 
 
 import Footer from "./componets/temp/footer";
@@ -34,7 +35,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Homepage/>}/>
           <Route path="/Restros/:Meal" element={<Restrolist/>}/>
-          <Route path="/FoodsList/" element={<FoodsByRestro/>}/>
+          <Route path="/FoodsList/:Restro" element={<FoodsByRestro/>}/>
+          <Route path="/search/:Query" element={<SearchResult/>}/>
           <Route path="/Cart/" element={<Cart/>}/>
           {
             user ?

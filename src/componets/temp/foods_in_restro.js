@@ -2,11 +2,13 @@ import React , {useState, useEffect} from "react";
 
 import Navbar from "./navbar";
 import fb from "../../firebase";
+import { useParams } from "react-router-dom";
 const DB =fb.firestore();
 const foods_list = DB.collection('foods');
 const cart_list = DB.collection('Cart');
 
 const FoodsByRestro=()=>{
+  const query = useParams();
   const[Foods, SetFoods] = useState([]);
   
   const[n, setn] = useState("");
@@ -16,15 +18,18 @@ const FoodsByRestro=()=>{
   const[p, setp] = useState("");
   
   useEffect(()=>{
-    const unsubrestro = foods_list.onSnapshot((snapshot) => {
-       const data = snapshot.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        SetFoods(data);
-   });
-   return unsubrestro;
- },[]);
+    if (query) {
+       console.log(query.Restro);
+       const unsubrestro = foods_list.where("Restro", "==", query.Restro).onSnapshot((snapshot) => {
+          const data = snapshot.docs.map(doc => ({
+             ...doc.data(),
+             id: doc.id,
+           }));
+           SetFoods(data);
+      });
+      return unsubrestro;
+    }
+ },[query]);
 
  const AddToCart=(id)=>{
   foods_list.doc(id).get().then((snapshot) => {
@@ -42,7 +47,11 @@ const FoodsByRestro=()=>{
     Img: i,
     Price: p,
     quantity: "1"
-  })
+  }).then((docRef)=> {
+    alert("Added To Cart")
+  }).catch((error) => {
+      console.error("error:", error);
+  });
  
   
  }
@@ -72,22 +81,14 @@ const FoodsByRestro=()=>{
                     </p>
                     <p class="mt-1">{item.Price} ₹</p>
                 </div>
-                
             </div>
             <div >
                 <button onClick={()=>{AddToCart(item.id)}} 
                 className="w-full text-center bg-yellow-500 text-white rounded-lg py-1">Add to cart</button>
             </div>
-          
-          
         </div>
       </div>
       ))} 
-      
-      
-      
-      
-      
     </div>
   </div>
 </section>
